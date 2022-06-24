@@ -7,7 +7,6 @@ import * as path from 'path';
 export const cleanOutFromScriptsTags = async () => {
 	try {
 		const targetPath = path.join(__dirname, '../out/index.html');
-		console.log('targetPath', targetPath);
 		await fs.readFile(targetPath, { encoding: 'utf8' }, (err, data) => {
 			if (err) throw err.message;
 

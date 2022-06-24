@@ -7,7 +7,7 @@
 		"build": "next build && next export && npm run clean_out_from_script_tags",
 		"start": "next start",
 		"lint": "next lint",
-		"clean_out_from_script_tags": "ts-node scripts/clean_out_from_scripts_tags.tsx"
+		"clean_out_from_script_tags": "ts-node scripts/clean_out_from_scripts_tags.ts"
 	},
 	"dependencies": {
 		"next": "12.1.6",

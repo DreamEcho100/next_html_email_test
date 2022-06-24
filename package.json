@@ -2,6 +2,7 @@
 	"name": "next_html_email_test",
 	"version": "0.1.0",
 	"private": true,
+	"homepage": "https://dreamecho100.github.io/next_html_email_test",
 	"scripts": {
 		"dev": "next dev",
 		"build": "next build && next export && npm run clean_out_from_script_tags",

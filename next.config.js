@@ -1,7 +1,8 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
 	reactStrictMode: true,
-	assetPrefix: '',
+	assetPrefix: './',
+	basePath: '',
 	unstable_runtimeJS: false,
 };
 

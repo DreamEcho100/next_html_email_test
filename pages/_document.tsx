@@ -86,21 +86,7 @@ class StaticDocument extends Document {
 
 		return (
 			<html>
-				<CustomHead>
-					<meta name='description' content='' />
-					{/* <base href={config.basePath + "/"} /> */}
-					<link rel='preconnect' href='https://fonts.googleapis.com' />
-					<link
-						rel='preconnect'
-						href='https://fonts.gstatic.com'
-						crossOrigin='true'
-					/>
-					<link href='css/fontawesome-5.15.4.min.css' rel='stylesheet' />
-					<link
-						href='https://fonts.googleapis.com/css2?family=Raleway:wght@300&display=swap'
-						rel='stylesheet'
-					/>
-				</CustomHead>
+				<CustomHead />
 				<body>
 					<Main />
 					{!pagesWithoutReact.includes(__NEXT_DATA__.page) && <NextScript />}

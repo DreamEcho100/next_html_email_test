@@ -8,8 +8,6 @@ function MyApp({ Component, pageProps }: AppProps) {
 	return (
 		<>
 			<Head>
-				<meta name='description' content='' />
-				{/* <base href={config.basePath + "/"} /> */}
 				<link rel='preconnect' href='https://fonts.googleapis.com' />
 				<link
 					rel='preconnect'

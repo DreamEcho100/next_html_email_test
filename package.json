@@ -4,9 +4,10 @@
 	"private": true,
 	"scripts": {
 		"dev": "next dev",
-		"build": "next build && next export",
+		"build": "next build && next export && npm run clean_out_from_script_tags",
 		"start": "next start",
-		"lint": "next lint"
+		"lint": "next lint",
+		"clean_out_from_script_tags": "tsc scripts/clean_out_from_scripts_tags.tsx && node scripts/clean_out_from_scripts_tags.js"
 	},
 	"dependencies": {
 		"next": "12.1.6",

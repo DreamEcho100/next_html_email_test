@@ -10,7 +10,10 @@ export const cleanOutFromScriptsTags = async () => {
 		await fs.readFile(targetPath, { encoding: 'utf8' }, (err, data) => {
 			if (err) throw err.message;
 
-			fs.writeFileSync(targetPath, data.replace(/<script.+<\/script>/g, ''));
+			fs.writeFileSync(
+				targetPath,
+				data.replace(/<\s*script[^>]*>(.*?)<\s*\/\s*script>/g, '')
+			);
 		});
 	} catch (err) {
 		console.log(err instanceof Error && err.message);

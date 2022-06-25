@@ -1,9 +1,178 @@
 import type { NextPage } from 'next';
 import Head from 'next/head';
+import {
+	FC,
+	ImgHTMLAttributes,
+	JSXElementConstructor,
+	ReactElement,
+	ReactFragment,
+	ReactNode,
+	ReactPortal,
+	TableHTMLAttributes,
+} from 'react';
+
+interface ITableProps extends TableHTMLAttributes<HTMLTableElement> {
+	children?:
+		| string
+		| number
+		| boolean
+		| ReactFragment
+		| ReactElement<any, string | JSXElementConstructor<any>>
+		| ReactPortal
+		| JSX.Element
+		| null
+		| undefined; // ReactNode; // JSX.Element;
+}
+
+const Table: FC<ITableProps> = ({ children, ...props }) => {
+	const renderBasedOnElementType = () => {
+		if (Array.isArray(children))
+			return (
+				<tbody>
+					{children.map((child, index) => {
+						if (child.type === 'tr') return child;
+
+						return (
+							<tr key={child?.key || index}>
+								<td>{child}</td>
+							</tr>
+						);
+					})}
+				</tbody>
+			);
+
+		return !children ||
+			typeof children === 'string' ||
+			typeof children === 'number' ||
+			typeof children === 'boolean' ? (
+			<tbody>
+				<tr>
+					<td>{children}</td>
+				</tr>
+			</tbody>
+		) : 'type' in children &&
+		  ['tfoot', 'thead', 'tbody'].includes(children?.type) ? (
+			children
+		) : (
+			<tbody>{children}</tbody>
+		);
+	};
+	return (
+		<table border={0} cellSpacing='0' cellPadding={0} {...props}>
+			{renderBasedOnElementType()}
+		</table>
+	);
+};
+
+interface IImage extends ImgHTMLAttributes<HTMLImageElement> {}
+
+const Image: FC<IImage> = ({ src, ...props }) => {
+	return (
+		// eslint-disable-next-line @next/next/no-img-element
+		<img
+			{...{
+				src: !src ? '' : src.startsWith('http') ? src : `./${src}`,
+			}}
+			alt=''
+			{...props}
+		/>
+	);
+};
+
+const EmailWrapper: FC<{ children?: ReactNode }> = ({ children }) => {
+	return (
+		<Table
+			width='100%'
+			style={{
+				backgroundColor: 'black',
+			}}
+		>
+			<tr>
+				<td align='center'>
+					<Table
+						key={2}
+						style={{
+							backgroundColor: 'white',
+						}}
+						width='600'
+					>
+						<tr>
+							<td>{children}</td>
+						</tr>
+					</Table>
+				</td>
+			</tr>
+		</Table>
+	);
+};
+
+const HeaderSection = () => {
+	return (
+		<Table width='100%'>
+			<tr>
+				<td align='center'>Shop the latest</td>
+			</tr>
+			<tr>
+				<td align='center'>View in Browser</td>
+			</tr>
+			<tr>
+				<td align='center'>Lord Taylor</td>
+			</tr>
+			<tr>
+				<td>
+					<Table width='100%'>
+						<tr>
+							<td>WOMEN</td>
+							<td>MEN</td>
+							<td>BEAUTY</td>
+							<td>HOME</td>
+							<td>SALE</td>
+						</tr>
+					</Table>
+				</td>
+			</tr>
+		</Table>
+	);
+};
+
+const CanadaGooseSection = () => {
+	return (
+		<Table width='100%'>
+			<tr>
+				<td align='center'>FREE SHIPPING ON ORDERS OVER $99</td>
+			</tr>
+			<tr>
+				<td align='center'>
+					<Table width='100%'>
+						<tr>
+							<td align='center'>JUST DROPPED FOR HIM</td>
+						</tr>
+						<tr>
+							<td align='center'>CANADA GOOSE</td>
+						</tr>
+						<tr>
+							<td align='center'>
+								Embrace the great outdoors in expertly-crafted
+							</td>
+						</tr>
+						<tr>
+							<td align='center'>SHOP NOW</td>
+						</tr>
+						<tr>
+							<td align='center'>
+								<Image src='./images/canda goose.jpeg' alt='canda goose' />
+							</td>
+						</tr>
+					</Table>
+				</td>
+			</tr>
+		</Table>
+	);
+};
 
 const Home: NextPage = () => {
 	return (
-		<div className='container'>
+		<>
 			<Head>
 				<meta charSet='UTF-8' />
 				<meta httpEquiv='X-UA-Compatible' content='IE=edge' />
@@ -13,59 +182,11 @@ const Home: NextPage = () => {
 				<link rel='icon' href='./favicon.ico' />
 			</Head>
 
-			<main className='main'>
-				<h1 className='title'>
-					Welcome to <a href='https://nextjs.org'>Next.js!</a>
-				</h1>
-
-				<p className='description'>
-					Get started by editing <code className='code'>pages/index.tsx</code>
-				</p>
-
-				<div className='grid'>
-					<a href='https://nextjs.org/docs' className='card'>
-						<h2>Documentation &rarr;</h2>
-						<p>Find in-depth information about Next.js features and API.</p>
-					</a>
-
-					<a href='https://nextjs.org/learn' className='card'>
-						<h2>Learn &rarr;</h2>
-						<p>Learn about Next.js in an interactive course with quizzes!</p>
-					</a>
-
-					<a
-						href='https://github.com/vercel/next.js/tree/canary/examples'
-						className='card'
-					>
-						<h2>Examples &rarr;</h2>
-						<p>Discover and deploy boilerplate example Next.js projects.</p>
-					</a>
-
-					<a
-						href='https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app'
-						className='card'
-					>
-						<h2>Deploy &rarr;</h2>
-						<p>
-							Instantly deploy your Next.js site to a public URL with Vercel.
-						</p>
-					</a>
-				</div>
-			</main>
-
-			<footer className='footer'>
-				<a
-					href='https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app'
-					target='_blank'
-					rel='noopener noreferrer'
-				>
-					Powered by{' '}
-					<span className='logo'>
-						<img src='./vercel.svg' alt='Vercel Logo' width={72} height={16} />
-					</span>
-				</a>
-			</footer>
-		</div>
+			<EmailWrapper>
+				<HeaderSection />
+				<CanadaGooseSection />
+			</EmailWrapper>
+		</>
 	);
 };
 

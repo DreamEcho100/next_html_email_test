@@ -86,10 +86,15 @@ class StaticDocument extends Document {
 
 		return (
 			<html>
-				<CustomHead />
+				{process.env.NODE_ENV === 'production' ? <CustomHead /> : <Head />}
 				<body>
 					<Main />
-					{!pagesWithoutReact.includes(__NEXT_DATA__.page) && <NextScript />}
+					{process.env.NODE_ENV === 'production' &&
+					!pagesWithoutReact.includes(__NEXT_DATA__.page) ? (
+						<NextScript />
+					) : (
+						<NextScript />
+					)}
 					{/* <NextScript>
 						<script>{JSON.stringify(__NEXT_DATA__)}</script>
 					</NextScript> */}

@@ -21,12 +21,14 @@ interface ITableProps extends TableHTMLAttributes<HTMLTableElement> {
 		| ReactPortal
 		| JSX.Element
 		| null
-		| undefined; // ReactNode; // JSX.Element;
+		| undefined;
+	tr?: boolean;
+	trs?: boolean;
 }
 
-const Table: FC<ITableProps> = ({ children, ...props }) => {
+const Table: FC<ITableProps> = ({ children, tr, trs, ...props }) => {
 	const renderBasedOnElementType = () => {
-		if (Array.isArray(children))
+		if (!tr && Array.isArray(children)) {
 			return (
 				<tbody>
 					{children.map((child, index) => {
@@ -34,28 +36,47 @@ const Table: FC<ITableProps> = ({ children, ...props }) => {
 
 						return (
 							<tr key={child?.key || index}>
-								<td>{child}</td>
+								{trs && child?.type === 'td' ? child : <td>{child}</td>}
 							</tr>
 						);
 					})}
 				</tbody>
 			);
+		}
 
-		return !children ||
+		const handleWrappingInTr = (
+			children:
+				| ReactFragment
+				| ReactElement<any, string | JSXElementConstructor<any>>
+				| ReactPortal
+				| JSX.Element
+		) => {
+			if ('type' in children && children?.type === 'tr') return children;
+			if (tr) return <tr>{children}</tr>;
+			return children;
+		};
+
+		if (
+			!children ||
 			typeof children === 'string' ||
 			typeof children === 'number' ||
-			typeof children === 'boolean' ? (
-			<tbody>
-				<tr>
-					<td>{children}</td>
-				</tr>
-			</tbody>
-		) : 'type' in children &&
-		  ['tfoot', 'thead', 'tbody'].includes(children?.type) ? (
-			children
-		) : (
-			<tbody>{children}</tbody>
-		);
+			typeof children === 'boolean'
+		)
+			return (
+				<tbody>
+					<tr>
+						<td>{children}</td>
+					</tr>
+				</tbody>
+			);
+
+		if (
+			'type' in children &&
+			['tfoot', 'thead', 'tbody'].includes(children?.type)
+		)
+			return children;
+
+		return <tbody>{handleWrappingInTr(children)}</tbody>;
 	};
 	return (
 		<table border={0} cellSpacing='0' cellPadding={0} {...props}>
@@ -63,6 +84,23 @@ const Table: FC<ITableProps> = ({ children, ...props }) => {
 		</table>
 	);
 };
+
+/*
+const Trs: FC<{ children: JSX.Element[] }> = ({ children }) => {
+	return (
+		<>
+			{children.map((child: JSX.Element, index) => {
+				if (child.type === 'tr') return child;
+				return (
+					<tr key={child?.key || index}>
+						{child?.type === 'td' ? child : <td>{child}</td>}
+					</tr>
+				);
+			})}
+		</>
+	);
+};
+*/
 
 interface IImage extends ImgHTMLAttributes<HTMLImageElement> {}
 
@@ -86,86 +124,110 @@ const EmailWrapper: FC<{ children?: ReactNode }> = ({ children }) => {
 			style={{
 				backgroundColor: 'black',
 			}}
+			tr
 		>
-			<tr>
-				<td align='center'>
-					<Table
-						key={2}
-						style={{
-							backgroundColor: 'white',
-						}}
-						width='600'
-					>
-						<tr>
-							<td>{children}</td>
-						</tr>
-					</Table>
-				</td>
-			</tr>
+			<td align='center'>
+				<Table
+					key={2}
+					style={{
+						backgroundColor: 'white',
+					}}
+					width='600'
+					tr
+				>
+					<td>{children}</td>
+				</Table>
+			</td>
 		</Table>
 	);
 };
 
 const HeaderSection = () => {
 	return (
-		<Table width='100%'>
-			<tr>
-				<td align='center'>Shop the latest</td>
-			</tr>
-			<tr>
-				<td align='center'>View in Browser</td>
-			</tr>
-			<tr>
-				<td align='center'>Lord Taylor</td>
-			</tr>
-			<tr>
-				<td>
-					<Table width='100%'>
-						<tr>
-							<td>WOMEN</td>
-							<td>MEN</td>
-							<td>BEAUTY</td>
-							<td>HOME</td>
-							<td>SALE</td>
-						</tr>
-					</Table>
-				</td>
-			</tr>
+		<Table width='100%' trs>
+			<td align='center'>Shop the latest</td>
+			<td align='center'>View in Browser</td>
+			<td align='center'>Lord Taylor</td>
+			<td>
+				<Table width='100%' tr>
+					<tr>
+						<td>WOMEN</td>
+						<td>MEN</td>
+						<td>BEAUTY</td>
+						<td>HOME</td>
+						<td>SALE</td>
+					</tr>
+				</Table>
+			</td>
 		</Table>
 	);
 };
 
 const CanadaGooseSection = () => {
 	return (
-		<Table width='100%'>
-			<tr>
-				<td align='center'>FREE SHIPPING ON ORDERS OVER $99</td>
-			</tr>
-			<tr>
-				<td align='center'>
-					<Table width='100%'>
-						<tr>
-							<td align='center'>JUST DROPPED FOR HIM</td>
-						</tr>
-						<tr>
-							<td align='center'>CANADA GOOSE</td>
-						</tr>
-						<tr>
-							<td align='center'>
-								Embrace the great outdoors in expertly-crafted
-							</td>
-						</tr>
-						<tr>
-							<td align='center'>SHOP NOW</td>
-						</tr>
-						<tr>
-							<td align='center'>
-								<Image src='./images/canda goose.jpeg' alt='canda goose' />
-							</td>
-						</tr>
-					</Table>
-				</td>
-			</tr>
+		<Table width='100%' trs>
+			<td align='center'>FREE SHIPPING ON ORDERS OVER $99</td>
+			<td align='center'>
+				<Table width='100%' trs>
+					<td align='center'>JUST DROPPED FOR HIM</td>
+					<td align='center'>CANADA GOOSE</td>
+					<td align='center'>Embrace the great outdoors in expertly-crafted</td>
+					<td align='center'>SHOP NOW</td>
+					<td align='center'>
+						<Image src='./images/canda goose model.jpeg' alt='canda goose' />
+					</td>
+				</Table>
+			</td>
+		</Table>
+	);
+};
+
+const NewArrivalsSectionItem = ({
+	title,
+	description,
+	src,
+}: {
+	title: string;
+	description: string;
+	src: string;
+}) => {
+	return (
+		<Table width='100%' trs>
+			<td align='center'>{title}</td>
+			<td align='center'>{description}</td>
+			<td align='center'>SHOP NOW</td>
+			<td align='center'>
+				<Image src={src} alt='knititude model' />
+			</td>
+		</Table>
+	);
+};
+
+const NewArrivalsSection = () => {
+	const data = [
+		{
+			title: 'KNITITUDE',
+			description: 'Elevated everyday styles featuring oh-so-soft knits.',
+			src: './images/knititude model.jpeg',
+		},
+		{
+			title: 'NINE WEST',
+			description: 'From statement pumps to sleek boots.',
+			src: './images/nine west boot.jpeg',
+		},
+	];
+
+	return (
+		<Table width='100%' tr>
+			<td>
+				<Table width='100%' trs>
+					<td align='center'>NEW ARRIVALS</td>
+					<td align='center'>FOR HER</td>
+				</Table>
+				{data.map((item) => (
+					<NewArrivalsSectionItem key={item.title} {...item} />
+				))}
+			</td>
 		</Table>
 	);
 };
@@ -185,6 +247,7 @@ const Home: NextPage = () => {
 			<EmailWrapper>
 				<HeaderSection />
 				<CanadaGooseSection />
+				<NewArrivalsSection />
 			</EmailWrapper>
 		</>
 	);

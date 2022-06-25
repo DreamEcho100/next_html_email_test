@@ -85,9 +85,21 @@ class StaticDocument extends Document {
 		const { __NEXT_DATA__ } = this.props;
 
 		return (
-			<html>
+			<html
+				style={{
+					margin: '0',
+					padding: '0',
+					minWidth: '100%',
+				}}
+			>
 				{process.env.NODE_ENV === 'production' ? <CustomHead /> : <Head />}
-				<body>
+				<body
+					style={{
+						margin: '0',
+						padding: '0',
+						minWidth: '100%',
+					}}
+				>
 					<Main />
 					{process.env.NODE_ENV === 'production' &&
 					!pagesWithoutReact.includes(__NEXT_DATA__.page) ? (
@@ -104,6 +116,8 @@ class StaticDocument extends Document {
 	}
 }
 
+// ---------------------------------------------------
 export default process.env.NODE_ENV === 'production'
 	? StaticDocument
 	: Document;
+// ---------------------------------------------------

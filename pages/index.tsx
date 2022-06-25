@@ -1,4 +1,5 @@
 import type { NextPage } from 'next';
+import css from 'styled-jsx/css';
 import Head from 'next/head';
 import {
 	FC,
@@ -85,6 +86,13 @@ const Table: FC<ITableProps> = ({ children, tr, trs, ...props }) => {
 	);
 };
 
+{
+	/* <p jsx>{`
+.s {
+	color: red;
+	background: #000
+}`}</p> */
+}
 /*
 const Trs: FC<{ children: JSX.Element[] }> = ({ children }) => {
 	return (
@@ -118,27 +126,64 @@ const Image: FC<IImage> = ({ src, ...props }) => {
 };
 
 const EmailWrapper: FC<{ children?: ReactNode }> = ({ children }) => {
+	const globalStyles = css.global`
+		:root {
+			color-scheme: light dark;
+			supported-color-schemes: light dark;
+		}
+		@media (prefers-color-scheme: dark) {
+			.wrapper {
+				background-color: white !important;
+			}
+			.container {
+				background-color: black !important;
+			}
+		}
+		@media only screen and (min-width: 960px) {
+			.container {
+				width: 960px;
+			}
+		}
+		@media only screen and (max-width: 960px) {
+			.container {
+				width: 600px;
+			}
+		}
+		@media only screen and (max-width: 600px) {
+			.container {
+				width: 100px;
+			}
+		}
+	`;
+
 	return (
-		<Table
-			width='100%'
-			style={{
-				backgroundColor: 'black',
-			}}
-			tr
-		>
-			<td align='center'>
-				<Table
-					key={2}
-					style={{
-						backgroundColor: 'white',
-					}}
-					width='600'
-					tr
-				>
-					<td>{children}</td>
-				</Table>
-			</td>
-		</Table>
+		<>
+			<style jsx global>
+				{globalStyles}
+			</style>
+			<Table
+				width='100%'
+				style={{
+					backgroundColor: 'black',
+				}}
+				tr
+				className='wrapper'
+			>
+				<td align='center'>
+					<Table
+						key={2}
+						style={{
+							backgroundColor: 'white',
+						}}
+						width='600'
+						tr
+						className='container'
+					>
+						<td>{children}</td>
+					</Table>
+				</td>
+			</Table>
+		</>
 	);
 };
 

@@ -8,8 +8,16 @@ import Head from 'next/head';
 function MyApp({ Component, pageProps }: AppProps) {
 	return (
 		<>
-			{/* <Head>
-			</Head> */}
+			<Head>
+				<meta httpEquiv='Content-Type' content='text/html charset=UTF-8' />
+				<meta
+					name='viewport'
+					content='width=device-width, initial-scale=1.0'
+				></meta>
+				<meta name='color-scheme' content='light dark' />
+				<meta name='supported-color-schemes' content='light dark' />
+				<title>HTML Email Template Project</title>
+			</Head>
 			<Component {...pageProps} />
 		</>
 	);

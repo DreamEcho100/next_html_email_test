@@ -229,6 +229,8 @@ const EmailWrapper: FC<{ children?: ReactNode }> = ({ children }) => {
 				width='100%'
 				style={{
 					backgroundColor: 'black',
+					fontFamily:
+						"'Open Sans', 'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif",
 				}}
 				tr
 				className='wrapper'
@@ -319,6 +321,7 @@ const CanadaGooseSection = () => {
 					trs
 					style={{
 						backgroundImage: 'linear-gradient(180deg, #cccdd3, #e7e4ec)',
+						color: 'black',
 					}}
 				>
 					<td
@@ -336,8 +339,26 @@ const CanadaGooseSection = () => {
 					<td align='center' style={{ fontWeight: '500', fontSize: '28px' }}>
 						CANADA GOOSE
 					</td>
-					<td align='center'>Embrace the great outdoors in expertly-crafted</td>
-					<td align='center'>SHOP NOW</td>
+					<td
+						align='center'
+						style={{
+							padding: '4px',
+						}}
+					>
+						Embrace the great outdoors in expertly-crafted
+					</td>
+					<td align='center'>
+						<Link
+							href='#'
+							style={{
+								fontWeight: 'bold',
+								textDecoration: 'underline',
+								padding: '8px',
+							}}
+						>
+							SHOP NOW
+						</Link>
+					</td>
 					<td align='center'>
 						<Image src='./images/canda goose model.jpeg' alt='canda goose' />
 					</td>
@@ -449,7 +470,7 @@ const OffersAddsRecommendationSection = () => {
 				</td>
 			</Table>
 			<Table width='100%' tr>
-				<td>
+				<td align='center'>
 					<Image
 						src='./images/afterpaye.jpeg'
 						alt='afterpaye, SHOP NOW, PAY LATER! Split your purchase into 4 interest-free payments.'

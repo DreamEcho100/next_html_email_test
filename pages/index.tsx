@@ -329,8 +329,8 @@ const CanadaGooseSection = () => {
 				style={{
 					backgroundColor: 'black',
 					color: 'white',
-					fontSize: '16px',
-					padding: '0 4px',
+					fontSize: 18,
+					padding: '12px 4px',
 				}}
 				className='header'
 			>
@@ -350,10 +350,10 @@ const CanadaGooseSection = () => {
 						align='center'
 						style={{
 							fontWeight: '500',
-							fontSize: '28px',
+							fontSize: 28,
 							padding: '0 5px',
 							fontStyle: 'italic',
-							paddingTop: '5px',
+							paddingTop: 4,
 						}}
 					>
 						JUST DROPPED FOR HIM
@@ -361,7 +361,7 @@ const CanadaGooseSection = () => {
 					<td
 						align='center'
 						style={{
-							fontSize: '44px',
+							fontSize: 44,
 							fontFamily: 'serif',
 							fontWeight: 'lighter',
 							lineHeight: 1,
@@ -372,7 +372,7 @@ const CanadaGooseSection = () => {
 					<td
 						align='center'
 						style={{
-							padding: '4px',
+							padding: 4,
 						}}
 					>
 						Embrace the great outdoors in expertly-crafted
@@ -383,7 +383,7 @@ const CanadaGooseSection = () => {
 							style={{
 								fontWeight: 'bold',
 								textDecoration: 'underline',
-								padding: '8px',
+								padding: 8,
 							}}
 						>
 							SHOP NOW
@@ -655,7 +655,7 @@ const OffersAddsRecommendationSection = () => {
 				style={{
 					width: '100%',
 					borderBottom: '4px solid black',
-					paddingTop: '64px',
+					paddingTop: 64,
 				}}
 			></Table>
 			<style global jsx>{`

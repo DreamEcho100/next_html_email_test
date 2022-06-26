@@ -525,9 +525,9 @@ const HomeEditSection = () => {
 			<td
 				align='center'
 				style={{
-					fontSize: 20,
-					fontStyle: 'italic',
+					fontSize: 28,
 					fontFamily: 'serif',
+					padding: '6px 0 12px',
 				}}
 			>
 				KATE SPADE NEW YORK HOME
@@ -535,7 +535,7 @@ const HomeEditSection = () => {
 			<td
 				align='center'
 				style={{
-					margin: '8px 4px',
+					padding: '12px 0px 24px',
 				}}
 			>
 				From playful cherry print tea kettles and hors d&apos;oeuvres trays to
@@ -554,7 +554,7 @@ const HomeEditSection = () => {
 			<td
 				align='center'
 				style={{
-					padding: '8px 4px',
+					padding: '12px 4px',
 				}}
 			>
 				<Image

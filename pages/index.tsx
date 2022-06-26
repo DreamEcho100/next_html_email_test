@@ -278,6 +278,7 @@ const HeaderSection = () => {
 								style: {
 									padding: '10px 5px',
 								},
+								align: 'center',
 							}}
 						>
 							<Link href='#'>WOMEN</Link>

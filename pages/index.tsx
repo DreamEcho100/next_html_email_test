@@ -2,6 +2,7 @@ import type { NextPage } from 'next';
 import css from 'styled-jsx/css';
 import Head from 'next/head';
 import {
+	CSSProperties,
 	FC,
 	ImgHTMLAttributes,
 	JSXElementConstructor,
@@ -86,13 +87,6 @@ const Table: FC<ITableProps> = ({ children, tr, trs, ...props }) => {
 	);
 };
 
-{
-	/* <p jsx>{`
-.s {
-	color: red;
-	background: #000
-}`}</p> */
-}
 /*
 const Trs: FC<{ children: JSX.Element[] }> = ({ children }) => {
 	return (
@@ -112,7 +106,11 @@ const Trs: FC<{ children: JSX.Element[] }> = ({ children }) => {
 
 interface IImage extends ImgHTMLAttributes<HTMLImageElement> {}
 
-const Image: FC<IImage> = ({ src, ...props }) => {
+const Image: FC<IImage> = ({ src, style, ...props }) => {
+	const imageStyles: CSSProperties = {
+		maxWidth: '100%',
+		...(style || {}),
+	};
 	return (
 		// eslint-disable-next-line @next/next/no-img-element
 		<img
@@ -121,6 +119,7 @@ const Image: FC<IImage> = ({ src, ...props }) => {
 			}}
 			alt=''
 			{...props}
+			style={imageStyles}
 		/>
 	);
 };
@@ -247,7 +246,6 @@ const NewArrivalsSectionItem = ({
 		</Table>
 	);
 };
-
 const NewArrivalsSection = () => {
 	const data = [
 		{
@@ -277,6 +275,116 @@ const NewArrivalsSection = () => {
 	);
 };
 
+const HomeEditSection = () => {
+	return (
+		<Table width='100%' trs>
+			<td align='center'>THE HOME EDIT:</td>
+			<td align='center'>KATE SPADE NEW YORK HOME</td>
+			<td align='center'>
+				From playful cherry print tea kettles and hors d&apos;oeuvres trays to
+				polka dotted tidbit plates, bring home a touch of whimsy.
+			</td>
+			<td align='center'>SHOP NOW</td>
+			<td align='center'>
+				<Image
+					src='./images/kate spade new york home example.jpeg'
+					alt='kate spade new york home example'
+				/>
+			</td>
+		</Table>
+	);
+};
+
+const OffersAddsRecommendationSection = () => {
+	return (
+		<>
+			<Table
+				width='100%'
+				trs
+				style={{
+					backgroundColor: '#5ac2ab',
+					color: 'white',
+				}}
+			>
+				<td align='center'>UP TO 70% OFF</td>
+				<td align='center'>NEW MARKDOWNS</td>
+				<td align='center'>
+					Hundreds of new items added to the sale, hurry before they&apos;re all
+					gone
+				</td>
+				<td>
+					<Table tr align='center' width='100%'>
+						<td align='center'>WOMEN&apos;S SALE</td>
+						<td align='center'>MEN&apos;S SALE</td>
+					</Table>
+				</td>
+			</Table>
+			<Table width='100%' tr>
+				<td>
+					<Image
+						src='./images/afterpaye.jpeg'
+						alt='afterpaye, SHOP NOW, PAY LATER! Split your purchase into 4 interest-free payments.'
+					/>
+				</td>
+			</Table>
+
+			<Table width='100%' trs>
+				<td align='center'>You may also love...</td>
+				<td align='center'>
+					<Image
+						src='./images/a collection of different items you may love.jpeg'
+						alt='a collection of different items you may love'
+					/>
+				</td>
+			</Table>
+		</>
+	);
+};
+
+const FooterSection = () => {
+	return (
+		<Table width='100%' trs>
+			<td align='center'>
+				<Image src='./images/facebook icon.jpeg' alt='facebook icon' />
+				<Image src='./images/instagram icon.jpeg' alt='instagram icon' />
+				<Image src='./images/twitter icon.jpeg' alt='twitter icon' />
+			</td>
+			<td align='center'>
+				<Table width='100%' trs>
+					<td align='center'>
+						ensure delivery to your inbox, please add info
+						@email.lordandtaylor.com to your address book/contacts
+					</td>
+					<td align='center'>
+						Receiving Free Shipping with your purchase over $99 is easy.
+						Here&apos;s how: Qualifying orders will automatically have their
+						shipping charges adjusted during the checkout process. This offer is
+						good only for standard shipping within the United States to the
+						address in your order. Qualifying amount applies to current
+						merchandise purchase only, not previous purchases, gift boxes,
+						packaging, taxes, shipping & handling, value of Lord & Taylor Gift
+						Cards or online gift certificates purchased. Not redeemable for cash
+						nor accepted as payment for any credit card account. No adjustment
+						on previous purchases. Offer is nontransferable without consent from
+						Lord & Taylor. Subject to purchase approval. Cash value of 1/100
+						cent. Valid in USA only.
+					</td>
+					<td align='center'>
+						Privacy policy | Terms & Conditions | Unsubscribe
+					</td>
+					<td align='center'>
+						<Table width='100%' trs>
+							<td align='center'>Lord & Taylor</td>
+							<td align='center'>275 Madison Avenue</td>
+							<td align='center'>New York, NY 10016</td>
+						</Table>
+					</td>
+				</Table>
+			</td>
+		</Table>
+	);
+};
+
 const Home: NextPage = () => {
 	return (
 		<>
@@ -293,6 +401,9 @@ const Home: NextPage = () => {
 				<HeaderSection />
 				<CanadaGooseSection />
 				<NewArrivalsSection />
+				<HomeEditSection />
+				<OffersAddsRecommendationSection />
+				<FooterSection />
 			</EmailWrapper>
 		</>
 	);

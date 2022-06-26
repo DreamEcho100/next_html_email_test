@@ -365,6 +365,7 @@ const CanadaGooseSection = () => {
 							fontFamily: 'serif',
 							fontWeight: 'lighter',
 							lineHeight: 1,
+							letterSpacing: 2,
 						}}
 					>
 						CANADA GOOSE
@@ -480,6 +481,7 @@ const NewArrivalsSection = () => {
 								fontSize: 44,
 								marginTop: 16,
 								fontFamily: 'serif',
+								letterSpacing: 2,
 							}}
 						>
 							NEW ARRIVALS

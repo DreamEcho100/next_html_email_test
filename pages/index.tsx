@@ -200,7 +200,7 @@ const EmailWrapper: FC<{ children?: ReactNode }> = ({ children }) => {
 				background-color: white !important;
 			}
 			.container {
-				background-color: black !important;
+				background-color: #06130e !important;
 			}
 		}
 		@media only screen and (min-width: 960px) {
@@ -306,6 +306,8 @@ const CanadaGooseSection = () => {
 				style={{
 					backgroundColor: 'black',
 					color: 'white',
+					fontSize: '20px',
+					padding: '8px 0',
 				}}
 				className='header'
 			>

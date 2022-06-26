@@ -189,6 +189,20 @@ const Link: FC<ILink> = ({ children, style, ...props }) => {
 	);
 };
 
+interface IParagraph extends HTMLAttributes<HTMLParagraphElement> {}
+const Paragraph: FC<IParagraph> = ({ children, style, ...props }) => {
+	const ParagraphStyles: CSSProperties = {
+		margin: 0,
+		padding: 0,
+		...(style || {}),
+	};
+	return (
+		<p style={ParagraphStyles} {...props}>
+			{children}
+		</p>
+	);
+};
+
 const EmailWrapper: FC<{ children?: ReactNode }> = ({ children }) => {
 	const globalStyles = css.global`
 		:root {
@@ -329,7 +343,7 @@ const CanadaGooseSection = () => {
 						align='center'
 						style={{
 							fontWeight: '500',
-							fontSize: '20px',
+							fontSize: '28px',
 							padding: '0 5px',
 							fontStyle: 'italic',
 							paddingTop: '5px',
@@ -337,7 +351,7 @@ const CanadaGooseSection = () => {
 					>
 						JUST DROPPED FOR HIM
 					</td>
-					<td align='center' style={{ fontWeight: '500', fontSize: '28px' }}>
+					<td align='center' style={{ fontWeight: '500', fontSize: '44px' }}>
 						CANADA GOOSE
 					</td>
 					<td
@@ -387,16 +401,30 @@ const NewArrivalsSectionItem = ({
 	src: string;
 }) => {
 	return (
-		<Table width='100%' trs>
-			<td align='center'>{title}</td>
-			<td align='center'>{description}</td>
-			<td align='center'>SHOP NOW</td>
+		<Table width='100%' trs style={{ padding: 8 }}>
+			<td align='center' style={{ fontSize: 32 }}>
+				{title}
+			</td>
+			<td align='center' style={{ padding: 12 }}>
+				{description}
+			</td>
 			<td align='center'>
-				<Image src={src} alt='knititude model' />
+				<Link
+					href='#'
+					style={{
+						textDecoration: 'underline',
+					}}
+				>
+					SHOP NOW
+				</Link>
+			</td>
+			<td align='center'>
+				<Image src={src} alt='knititude model' style={{ padding: 16 }} />
 			</td>
 		</Table>
 	);
 };
+
 const NewArrivalsSection = () => {
 	const data = [
 		{
@@ -415,8 +443,28 @@ const NewArrivalsSection = () => {
 		<Table width='100%' tr>
 			<td>
 				<Table width='100%' trs>
-					<td align='center'>NEW ARRIVALS</td>
-					<td align='center'>FOR HER</td>
+					<td align='center'>
+						<Paragraph
+							style={{
+								fontWeight: 'lighter',
+								fontSize: '44px',
+								marginTop: 16,
+							}}
+						>
+							NEW ARRIVALS
+						</Paragraph>
+					</td>
+					<td align='center'>
+						<Paragraph
+							style={{
+								fontStyle: 'italic',
+								fontSize: '32px',
+								marginBottom: 16,
+							}}
+						>
+							FOR HER
+						</Paragraph>
+					</td>
 				</Table>
 				{data.map((item) => (
 					<NewArrivalsSectionItem key={item.title} {...item} />

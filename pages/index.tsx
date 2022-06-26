@@ -2,8 +2,10 @@ import type { NextPage } from 'next';
 import css from 'styled-jsx/css';
 import Head from 'next/head';
 import {
+	AnchorHTMLAttributes,
 	CSSProperties,
 	FC,
+	HTMLAttributes,
 	ImgHTMLAttributes,
 	JSXElementConstructor,
 	ReactElement,
@@ -11,6 +13,7 @@ import {
 	ReactNode,
 	ReactPortal,
 	TableHTMLAttributes,
+	TdHTMLAttributes,
 } from 'react';
 
 interface ITableProps extends TableHTMLAttributes<HTMLTableElement> {
@@ -24,20 +27,38 @@ interface ITableProps extends TableHTMLAttributes<HTMLTableElement> {
 		| JSX.Element
 		| null
 		| undefined;
-	tr?: boolean;
+	tr?: boolean | HTMLAttributes<HTMLTableRowElement>;
 	trs?: boolean;
 }
 
-const Table: FC<ITableProps> = ({ children, tr, trs, ...props }) => {
+const Table: FC<ITableProps> = ({
+	children,
+	style,
+	cellSpacing,
+	cellPadding,
+	tr,
+	trs,
+	...props
+}) => {
+	const tableStyles: CSSProperties = {
+		margin: 0,
+		padding: 0,
+		border: 0,
+		...(style || {}),
+	};
+
 	const renderBasedOnElementType = () => {
 		if (!tr && Array.isArray(children)) {
 			return (
 				<tbody>
 					{children.map((child, index) => {
-						if (child.type === 'tr') return child;
+						if (child.type === 'tr' || child.type === 'style') return child;
 
 						return (
-							<tr key={child?.key || index}>
+							<tr
+								key={child?.key || index}
+								{...((typeof tr === 'object' && tr) || {})}
+							>
 								{trs && child?.type === 'td' ? child : <td>{child}</td>}
 							</tr>
 						);
@@ -53,8 +74,13 @@ const Table: FC<ITableProps> = ({ children, tr, trs, ...props }) => {
 				| ReactPortal
 				| JSX.Element
 		) => {
-			if ('type' in children && children?.type === 'tr') return children;
-			if (tr) return <tr>{children}</tr>;
+			if (
+				'type' in children &&
+				(children.type === 'tr' || children.type === 'style')
+			)
+				return children;
+			if (tr)
+				return <tr {...((typeof tr === 'object' && tr) || {})}>{children}</tr>;
 			return children;
 		};
 
@@ -66,7 +92,7 @@ const Table: FC<ITableProps> = ({ children, tr, trs, ...props }) => {
 		)
 			return (
 				<tbody>
-					<tr>
+					<tr {...((typeof tr === 'object' && tr) || {})}>
 						<td>{children}</td>
 					</tr>
 				</tbody>
@@ -81,31 +107,55 @@ const Table: FC<ITableProps> = ({ children, tr, trs, ...props }) => {
 		return <tbody>{handleWrappingInTr(children)}</tbody>;
 	};
 	return (
-		<table border={0} cellSpacing='0' cellPadding={0} {...props}>
+		<table
+			cellSpacing={cellSpacing || 0}
+			cellPadding={cellPadding || 0}
+			style={tableStyles}
+			{...props}
+		>
 			{renderBasedOnElementType()}
 		</table>
 	);
 };
 
-/*
-const Trs: FC<{ children: JSX.Element[] }> = ({ children }) => {
+const Trs: FC<{
+	children: JSX.Element[];
+	td?: TdHTMLAttributes<HTMLTableCellElement>;
+}> = ({ children, td }) => {
 	return (
 		<>
 			{children.map((child: JSX.Element, index) => {
 				if (child.type === 'tr') return child;
 				return (
 					<tr key={child?.key || index}>
-						{child?.type === 'td' ? child : <td>{child}</td>}
+						{child?.type === 'td' ? child : <td {...(td || {})}>{child}</td>}
 					</tr>
 				);
 			})}
 		</>
 	);
 };
-*/
+
+const Tr: FC<{
+	children: JSX.Element[];
+	td?: TdHTMLAttributes<HTMLTableCellElement>;
+}> = ({ children, td }) => {
+	return (
+		<tr>
+			{children.map((child, index) =>
+				child?.type === 'td' ? (
+					child
+				) : (
+					<td key={child?.key || index} {...(td || {})}>
+						{child}
+					</td>
+				)
+			)}
+		</tr>
+	);
+};
 
 interface IImage extends ImgHTMLAttributes<HTMLImageElement> {}
-
 const Image: FC<IImage> = ({ src, style, ...props }) => {
 	const imageStyles: CSSProperties = {
 		maxWidth: '100%',
@@ -121,6 +171,21 @@ const Image: FC<IImage> = ({ src, style, ...props }) => {
 			{...props}
 			style={imageStyles}
 		/>
+	);
+};
+
+interface ILink extends AnchorHTMLAttributes<HTMLAnchorElement> {}
+const Link: FC<ILink> = ({ children, style, ...props }) => {
+	const linkStyles: CSSProperties = {
+		textDecoration: 'none',
+		color: 'inherit',
+		fontSize: 'inherit',
+		...(style || {}),
+	};
+	return (
+		<a style={linkStyles} {...props}>
+			{children}
+		</a>
 	);
 };
 
@@ -188,33 +253,87 @@ const EmailWrapper: FC<{ children?: ReactNode }> = ({ children }) => {
 
 const HeaderSection = () => {
 	return (
-		<Table width='100%' trs>
-			<td align='center'>Shop the latest</td>
-			<td align='center'>View in Browser</td>
-			<td align='center'>Lord Taylor</td>
-			<td>
-				<Table width='100%' tr>
-					<tr>
-						<td>WOMEN</td>
-						<td>MEN</td>
-						<td>BEAUTY</td>
-						<td>HOME</td>
-						<td>SALE</td>
-					</tr>
-				</Table>
-			</td>
-		</Table>
+		<>
+			<Table width='100%' trs>
+				<td
+					align='center'
+					style={{ fontSize: '9.6px', padding: '12px 0 24px' }}
+				>
+					<Link href='#'> Shop the latest</Link>
+				</td>
+				<td align='center' style={{ fontSize: '9.6px', padding: '0 0 6px' }}>
+					<Link href='#' style={{ textDecoration: 'underline' }}>
+						View in Browser
+					</Link>
+				</td>
+				<td align='center'>
+					<h1 style={{ margin: 0 }}>Lord & Taylor</h1>
+				</td>
+				<td>
+					<Table align='center' width='100%' className='nav'>
+						<Tr
+							td={{
+								style: {
+									padding: '10px 5px',
+								},
+							}}
+						>
+							<Link href='#'>WOMEN</Link>
+							<Link href='#'>MEN</Link>
+							<Link href='#'>BEAUTY</Link>
+							<Link href='#'>HOME</Link>
+							<Link href='#'>SALE</Link>
+						</Tr>
+					</Table>
+				</td>
+			</Table>
+			<style global jsx>{`
+				@media only screen and (min-width: 960px) {
+					.nav td {
+						padding: 0 1em;
+					}
+				}
+			`}</style>
+		</>
 	);
 };
 
 const CanadaGooseSection = () => {
 	return (
 		<Table width='100%' trs>
-			<td align='center'>FREE SHIPPING ON ORDERS OVER $99</td>
+			<td
+				align='center'
+				style={{
+					backgroundColor: 'black',
+					color: 'white',
+				}}
+				className='header'
+			>
+				FREE SHIPPING ON ORDERS OVER $99
+			</td>
 			<td align='center'>
-				<Table width='100%' trs>
-					<td align='center'>JUST DROPPED FOR HIM</td>
-					<td align='center'>CANADA GOOSE</td>
+				<Table
+					width='100%'
+					trs
+					style={{
+						backgroundImage: 'linear-gradient(180deg, #cccdd3, #e7e4ec)',
+					}}
+				>
+					<td
+						align='center'
+						style={{
+							fontWeight: '500',
+							fontSize: '20px',
+							padding: '0 5px',
+							fontStyle: 'italic',
+							paddingTop: '5px',
+						}}
+					>
+						JUST DROPPED FOR HIM
+					</td>
+					<td align='center' style={{ fontWeight: '500', fontSize: '28px' }}>
+						CANADA GOOSE
+					</td>
 					<td align='center'>Embrace the great outdoors in expertly-crafted</td>
 					<td align='center'>SHOP NOW</td>
 					<td align='center'>
@@ -222,6 +341,14 @@ const CanadaGooseSection = () => {
 					</td>
 				</Table>
 			</td>
+			<style global jsx>{`
+				@media (prefers-color-scheme: dark) {
+					.header {
+						background-color: white !important;
+						color: black !important;
+					}
+				}
+			`}</style>
 		</Table>
 	);
 };

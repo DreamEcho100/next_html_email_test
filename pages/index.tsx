@@ -270,14 +270,20 @@ const EmailWrapper: FC<{ children?: ReactNode }> = ({ children }) => {
 const HeaderSection = () => {
 	return (
 		<>
-			<Table width='100%' trs>
+			<Table
+				width='100%'
+				trs
+				style={{
+					padding: '0 4px',
+				}}
+			>
 				<td
 					align='center'
 					style={{ fontSize: '9.6px', padding: '12px 0 24px' }}
 				>
 					<Link href='#'> Shop the latest</Link>
 				</td>
-				<td align='center' style={{ fontSize: '9.6px', padding: '0 0 6px' }}>
+				<td align='center' style={{ fontSize: '9.6px', padding: '0 0 16px' }}>
 					<Link href='#' style={{ textDecoration: 'underline' }}>
 						View in Browser
 					</Link>
@@ -324,7 +330,7 @@ const CanadaGooseSection = () => {
 					backgroundColor: 'black',
 					color: 'white',
 					fontSize: '16px',
-					padding: '8px 0',
+					padding: '0 4px',
 				}}
 				className='header'
 			>
@@ -337,6 +343,7 @@ const CanadaGooseSection = () => {
 					style={{
 						backgroundImage: 'linear-gradient(180deg, #cccdd3, #e7e4ec)',
 						color: 'black',
+						padding: '0 4px',
 					}}
 				>
 					<td
@@ -351,7 +358,15 @@ const CanadaGooseSection = () => {
 					>
 						JUST DROPPED FOR HIM
 					</td>
-					<td align='center' style={{ fontWeight: '500', fontSize: '44px' }}>
+					<td
+						align='center'
+						style={{
+							fontSize: '44px',
+							fontFamily: 'serif',
+							fontWeight: 'lighter',
+							lineHeight: 1,
+						}}
+					>
 						CANADA GOOSE
 					</td>
 					<td
@@ -375,7 +390,13 @@ const CanadaGooseSection = () => {
 						</Link>
 					</td>
 					<td align='center'>
-						<Image src='./images/canda goose model.jpeg' alt='canda goose' />
+						<Image
+							style={{
+								padding: '0 5px',
+							}}
+							src='./images/canda goose model.jpeg'
+							alt='canda goose'
+						/>
 					</td>
 				</Table>
 			</td>
@@ -401,8 +422,17 @@ const NewArrivalsSectionItem = ({
 	src: string;
 }) => {
 	return (
-		<Table width='100%' trs style={{ padding: 8 }}>
-			<td align='center' style={{ fontSize: 32 }}>
+		<Table
+			width='100%'
+			trs
+			style={{
+				padding: '0 4px',
+			}}
+		>
+			<td
+				align='center'
+				style={{ fontSize: 32, fontFamily: 'serif', fontWeight: 'lighter' }}
+			>
 				{title}
 			</td>
 			<td align='center' style={{ padding: 12 }}>
@@ -447,8 +477,9 @@ const NewArrivalsSection = () => {
 						<Paragraph
 							style={{
 								fontWeight: 'lighter',
-								fontSize: '44px',
+								fontSize: 44,
 								marginTop: 16,
+								fontFamily: 'serif',
 							}}
 						>
 							NEW ARRIVALS
@@ -458,7 +489,7 @@ const NewArrivalsSection = () => {
 						<Paragraph
 							style={{
 								fontStyle: 'italic',
-								fontSize: '32px',
+								fontSize: 28,
 								marginBottom: 16,
 							}}
 						>
@@ -476,16 +507,60 @@ const NewArrivalsSection = () => {
 
 const HomeEditSection = () => {
 	return (
-		<Table width='100%' trs>
-			<td align='center'>THE HOME EDIT:</td>
-			<td align='center'>KATE SPADE NEW YORK HOME</td>
-			<td align='center'>
+		<Table
+			width='100%'
+			trs
+			style={{
+				padding: '0 4px',
+			}}
+		>
+			<td
+				align='center'
+				style={{
+					fontSize: 28,
+				}}
+			>
+				THE HOME EDIT:
+			</td>
+			<td
+				align='center'
+				style={{
+					fontSize: 20,
+					fontStyle: 'italic',
+					fontFamily: 'serif',
+				}}
+			>
+				KATE SPADE NEW YORK HOME
+			</td>
+			<td
+				align='center'
+				style={{
+					margin: '8px 4px',
+				}}
+			>
 				From playful cherry print tea kettles and hors d&apos;oeuvres trays to
 				polka dotted tidbit plates, bring home a touch of whimsy.
 			</td>
-			<td align='center'>SHOP NOW</td>
 			<td align='center'>
+				<Link
+					href='#'
+					style={{
+						textDecoration: 'underline',
+					}}
+				>
+					SHOP NOW
+				</Link>
+			</td>
+			<td
+				align='center'
+				style={{
+					padding: '8px 4px',
+				}}
+			>
 				<Image
+					style={{
+						padding: '0 10px',
+					}}
 					src='./images/kate spade new york home example.jpeg'
 					alt='kate spade new york home example'
 				/>
@@ -503,6 +578,7 @@ const OffersAddsRecommendationSection = () => {
 				style={{
 					backgroundColor: '#5ac2ab',
 					color: 'white',
+					padding: '0 4px',
 				}}
 			>
 				<td align='center'>UP TO 70% OFF</td>

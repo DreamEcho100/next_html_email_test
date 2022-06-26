@@ -308,7 +308,7 @@ const CanadaGooseSection = () => {
 				style={{
 					backgroundColor: 'black',
 					color: 'white',
-					fontSize: '20px',
+					fontSize: '16px',
 					padding: '8px 0',
 				}}
 				className='header'

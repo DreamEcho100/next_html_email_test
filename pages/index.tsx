@@ -259,7 +259,7 @@ const EmailWrapper: FC<{ children?: ReactNode }> = ({ children }) => {
 						tr
 						className='container'
 					>
-						<td>{children}</td>
+						<td align='center'>{children}</td>
 					</Table>
 				</td>
 			</Table>
@@ -511,7 +511,7 @@ const HomeEditSection = () => {
 			width='100%'
 			trs
 			style={{
-				padding: '0 4px',
+				padding: '0 4px 44px',
 			}}
 		>
 			<td
@@ -578,23 +578,59 @@ const OffersAddsRecommendationSection = () => {
 				style={{
 					backgroundColor: '#5ac2ab',
 					color: 'white',
-					padding: '0 4px',
+					padding: '24px 12px',
+					width: '90%',
 				}}
 			>
-				<td align='center'>UP TO 70% OFF</td>
-				<td align='center'>NEW MARKDOWNS</td>
-				<td align='center'>
+				<td
+					align='center'
+					style={{
+						fontSize: 24,
+					}}
+				>
+					UP TO 70% OFF
+				</td>
+				<td
+					align='center'
+					style={{
+						padding: '4px 0 8px',
+						fontSize: 34,
+						fontFamily: 'serif',
+					}}
+				>
+					NEW MARKDOWNS
+				</td>
+				<td
+					align='center'
+					style={{
+						paddingBottom: 12,
+					}}
+				>
 					Hundreds of new items added to the sale, hurry before they&apos;re all
 					gone
 				</td>
 				<td>
 					<Table tr align='center' width='100%'>
-						<td align='center'>WOMEN&apos;S SALE</td>
-						<td align='center'>MEN&apos;S SALE</td>
+						{["WOMEN'S SALE", "MEN'S SALE"].map((item) => (
+							<td align='center' key={item}>
+								<Link
+									href='#'
+									style={{ textDecoration: 'underline', fontSize: 18 }}
+								>
+									{item}
+								</Link>
+							</td>
+						))}
 					</Table>
 				</td>
 			</Table>
-			<Table width='100%' tr>
+			<Table
+				width='100%'
+				tr
+				style={{
+					padding: '44px 0 4px',
+				}}
+			>
 				<td align='center'>
 					<Image
 						src='./images/afterpaye.jpeg'
@@ -604,7 +640,9 @@ const OffersAddsRecommendationSection = () => {
 			</Table>
 
 			<Table width='100%' trs>
-				<td align='center'>You may also love...</td>
+				<td align='center' style={{ padding: '32px 0', fontSize: 32 }}>
+					You may also love...
+				</td>
 				<td align='center'>
 					<Image
 						src='./images/a collection of different items you may love.jpeg'
@@ -612,6 +650,21 @@ const OffersAddsRecommendationSection = () => {
 					/>
 				</td>
 			</Table>
+			<Table
+				className='line-separator'
+				style={{
+					width: '100%',
+					borderBottom: '4px solid black',
+					paddingTop: '64px',
+				}}
+			></Table>
+			<style global jsx>{`
+				@media (prefers-color-scheme: dark) {
+					.line-separator {
+						border-bottom-color: white !important;
+					}
+				}
+			`}</style>
 		</>
 	);
 };

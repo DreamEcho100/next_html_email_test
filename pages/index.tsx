@@ -5,6 +5,7 @@ import {
 	AnchorHTMLAttributes,
 	CSSProperties,
 	FC,
+	Fragment,
 	HTMLAttributes,
 	ImgHTMLAttributes,
 	JSXElementConstructor,
@@ -274,7 +275,7 @@ const HeaderSection = () => {
 				width='100%'
 				trs
 				style={{
-					padding: '0 4px',
+					padding: '4px 4px 0',
 				}}
 			>
 				<td
@@ -673,19 +674,59 @@ const OffersAddsRecommendationSection = () => {
 
 const FooterSection = () => {
 	return (
-		<Table width='100%' trs>
-			<td align='center'>
-				<Image src='./images/facebook icon.jpeg' alt='facebook icon' />
-				<Image src='./images/instagram icon.jpeg' alt='instagram icon' />
-				<Image src='./images/twitter icon.jpeg' alt='twitter icon' />
+		<Table
+			width='100%'
+			trs
+			style={{
+				padding: '0 4px 4px',
+			}}
+		>
+			<td align='center' style={{ padding: 26 }} className='social-links'>
+				{[
+					{ src: './images/facebook icon.jpeg', alt: 'facebook icon' },
+					{ src: './images/instagram icon.jpeg', alt: 'instagram icon' },
+					{ src: './images/twitter icon.jpeg', alt: 'twitter icon' },
+				].map(({ alt, src }, index) => (
+					<Image
+						style={{
+							margin: '0 26px',
+						}}
+						key={index}
+						src={src}
+						alt={alt}
+					/>
+				))}
 			</td>
 			<td align='center'>
-				<Table width='100%' trs>
-					<td align='center'>
-						ensure delivery to your inbox, please add info
-						@email.lordandtaylor.com to your address book/contacts
+				<Table
+					width='100%'
+					trs
+					style={{
+						fontSize: 12,
+						padding: '0 8px',
+					}}
+				>
+					<td
+						align='center'
+						style={{
+							paddingBottom: 13,
+						}}
+					>
+						ensure delivery to your inbox, please add{' '}
+						<Link
+							href='mailto:info@email.lordandtaylor.com'
+							style={{ textDecoration: 'underline', color: 'revert' }}
+						>
+							info@email.lordandtaylor.com
+						</Link>{' '}
+						to your address book/contacts
 					</td>
-					<td align='center'>
+					<td
+						align='center'
+						style={{
+							paddingBottom: 52,
+						}}
+					>
 						Receiving Free Shipping with your purchase over $99 is easy.
 						Here&apos;s how: Qualifying orders will automatically have their
 						shipping charges adjusted during the checkout process. This offer is
@@ -700,7 +741,18 @@ const FooterSection = () => {
 						cent. Valid in USA only.
 					</td>
 					<td align='center'>
-						Privacy policy | Terms & Conditions | Unsubscribe
+						{[
+							{ text: 'Privacy policy', href: '#' },
+							{ text: 'Terms & Conditions', href: '#' },
+							{ text: 'Unsubscribe', href: '#' },
+						].map(({ text, href }, index, arr) => (
+							<span key={index}>
+								<Link href={href} style={{ textDecoration: 'underline' }}>
+									{text}
+								</Link>
+								{index + 1 !== arr.length && ' | '}
+							</span>
+						))}
 					</td>
 					<td align='center'>
 						<Table width='100%' trs>
@@ -711,6 +763,13 @@ const FooterSection = () => {
 					</td>
 				</Table>
 			</td>
+			<style global jsx>{`
+				@media only screen and (max-width: 600px) {
+					.social-links img {
+						margin: 0 13px !important;
+					}
+				}
+			`}</style>
 		</Table>
 	);
 };
